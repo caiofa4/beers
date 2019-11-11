@@ -3,4 +3,5 @@
 
     <string name="retry">Retry</string>
     <string name="post_error">An error occurred while loading the beers</string>
+    <string name="since">Since:</string>
 </resources>

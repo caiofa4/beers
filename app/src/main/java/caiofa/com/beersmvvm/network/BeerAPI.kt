@@ -3,6 +3,7 @@ package caiofa.com.beersmvvm.network
 import caiofa.com.beersmvvm.model.Beer
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface BeerAPI {
     /**
@@ -11,7 +12,9 @@ interface BeerAPI {
     @GET("beers")
     fun getBeers(): Observable<List<Beer>>
 
-    @GET("/beers")
+    @GET("beers")
+    fun getAllBeers(@Query("page") page: Int): Observable<List<Beer>>
+
     fun getSingleBeer(): Observable<List<Beer>>
 
     @GET("/beers/random")

@@ -11,5 +11,4 @@ data class Beer (
     val first_brewed: String,
     val description: String,
     val image_url: String,
-    val yeast: String,
     val brewers_tips: String  )

@@ -1,5 +1,6 @@
 package caiofa.com.beersmvvm
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 
@@ -39,7 +40,7 @@ class BeerListViewModel(private val beerDao: BeerDao): BaseViewModel() {
             .concatMap {
                     dbBeerList ->
                 if(dbBeerList.isEmpty())
-                    beerApi.getBeers().concatMap {
+                    beerApi.getAllBeers(1).concatMap {
                             apiBeerList -> beerDao.insertAll(*apiBeerList.toTypedArray())
                         Observable.just(apiBeerList)
                     }
@@ -52,7 +53,7 @@ class BeerListViewModel(private val beerDao: BeerDao): BaseViewModel() {
             .doOnTerminate { onRetrieveBeerListFinish() }
             .subscribe(
                 { result -> onRetrieveBeerListSuccess(result) },
-                { onRetrieveBeerListError() }
+                { error -> onRetrieveBeerListError(error) }
             )
     }
 
@@ -69,7 +70,8 @@ class BeerListViewModel(private val beerDao: BeerDao): BaseViewModel() {
         beerListAdapter.updateBeerList(beerList)
     }
 
-    private fun onRetrieveBeerListError(){
+    private fun onRetrieveBeerListError(error : Throwable){
+        Log.i("MYAPP", "Error while doing something", error)
         errorMessage.value = R.string.post_error
     }
 
